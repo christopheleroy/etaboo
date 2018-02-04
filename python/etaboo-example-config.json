@@ -1,0 +1,26 @@
+[
+ {"stream-name": "load-contacts",
+  "select": "SELECT id, first_name, last_name, phone, email, last_seen_note FROM contax",
+  "select-columns": ["id", "fn", "ln", "ph", "em", "recentNote"],
+  "key":["id"],
+  "insert": "INSERT into contax(id,first_name, last_name, phone, email, last_seen_note) VALUES(?,?,?,?,?,?)",
+  "insert-columns": ["id", "fn", "ln", "ph", "em", "recentNote"],
+  "// comment-UPD": [
+      "This 'load-contacts' config offers to update a few fields if needed ..."
+  ],
+  "update": "UPDATE contax SET phone = ?, email=?, last_seen_note=? WHERE id=?",
+  "update-columns": ["ph", "em", "recentNote", "id"],
+
+  "db0": {"type":"pg", "user":"fancyman", "host":"cluck.chickens.com", "dbname":"customers"},
+  "db":  {"type":"sl", "file":"db/sl3.example.db"},
+
+  "parser": {"header":
+    {"columns": [ {"name":"id", "title":"Identifier"},
+                  {"name": "fn", "title": "First*" },
+                  {"name": "ln", "title":"Last Name" },
+                  {"name": "ph", "title":"Phone*"},
+                  {"name": "em", "title": "Email"},
+                  {"name":"recentNote", "title":"Last Meeting"} ] }
+   }
+ }
+]
